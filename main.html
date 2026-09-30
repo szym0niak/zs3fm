@@ -1,0 +1,224 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ZS3FM | Nawigacja</title>
+
+	<style>
+
+		/* podstawowy */
+		body {
+			margin: 0;
+			background-color: lightseagreen;
+			font-family: monospace;
+		}
+
+		/* nawigacja */
+		.navigation {
+			width: calc(100% - 10px);
+			margin: 5px;
+		}
+
+		/* naglowek nawigacji */
+		.navigation summary {
+			cursor: pointer;
+			list-style: none;
+			background: linear-gradient(
+				#751bd1,
+				#33008f
+			);
+			color: white;
+			border: 3px outset #bfffff;
+			padding: 7px;
+			text-align: center;
+			font-family: Arial, sans-serif;
+			font-size: 18px;
+			font-weight: bold;
+			text-shadow: 1px 1px #000;
+			user-select: none;
+		}
+
+		/* usuniecie standardowego trojkąta */
+		.navigation summary::-webkit-details-marker {
+			display: none;
+		}
+
+		/* naglowek po otwarciu */
+		.navigation.open summary {
+			background: linear-gradient(
+				#4b009c,
+				#24006b
+			);
+			border-style: inset;
+		}
+
+		/* panel z linkami */
+		.nav-links {
+			background-color: #d9ffff;
+			border-left: 3px solid #751bd1;
+			border-right: 3px solid #751bd1;
+			border-bottom: 3px solid #751bd1;
+			padding: 5px;
+			overflow: hidden;
+			height: 0;
+			transition:
+				height 0.3s ease;
+		}
+
+		/* linki */
+		.nav-links a {
+			display: block;
+			margin: 4px 0;
+			padding: 7px;
+			background: linear-gradient(
+				#ffffff,
+				#d7d7ff
+			);
+			border: 2px outset #aaaaff;
+			color: #351080;
+			text-decoration: none;
+			font-family: Arial, sans-serif;
+			font-size: 15px;
+			font-weight: bold;
+			transition:
+				background 0.1s ease,
+				color 0.1s ease;
+		}
+
+		/* hover */
+		.nav-links a:hover {
+			background: #baffff;
+			color: #ff00aa;
+		}
+
+		/* kliniecie w link */
+		.nav-links a:active {
+			border-style: inset;
+			padding-top: 8px;
+			padding-bottom: 6px;
+		}
+
+		/* zawartosc strony */
+		.content {
+			margin: 5px;
+		}
+
+	</style>
+</head>
+
+
+<body>
+
+	<details class="navigation">
+
+		<summary>
+			Menu
+		</summary>
+
+
+		<div class="nav-links">
+		
+			<a href="glowna.html" target="content">
+				&gt;&nbsp; Propozycje
+			</a>
+			
+			<a href="onas.html" target="content">
+				&gt;&nbsp; O nas
+			</a>
+
+			<a href="regulamin.html" target="content">
+				&gt;&nbsp; Regulamin
+			</a>
+
+			<a href="rekrutacja.html" target="content">
+				&gt;&nbsp; Rekrutacja
+			</a>
+
+			<a href="galeria.html" target="content">
+				&gt;&nbsp; Galeria
+			</a>
+
+			<a href="lokalnascena.html" target="content">
+				&gt;&nbsp; Lokalna scena
+			</a>
+
+
+		</div>
+		
+	</details>
+
+	<div class="content">
+		<iframe
+			src="glowna.html"
+			name="content"
+			style="
+				width:100%;
+				height:1200px;
+				border:none;
+				display:block;
+			">
+		</iframe>
+	</div>
+
+	<script>
+		const navigation = document.querySelector(".navigation");
+		const summary = navigation.querySelector("summary");
+		const menu = navigation.querySelector(".nav-links");
+
+		function openMenu() {
+			navigation.classList.add("open");
+			navigation.open = true;
+			menu.style.height = menu.scrollHeight + "px";
+			menu.addEventListener("transitionend", function handler() {
+				if (navigation.open) {
+					menu.style.height = "auto";
+				}
+				menu.removeEventListener("transitionend", handler);
+			});
+		}
+		
+		function closeMenu() {
+			menu.style.height = menu.scrollHeight + "px";
+			menu.offsetHeight;
+			menu.style.height = "0px";
+			navigation.classList.remove("open");
+			menu.addEventListener("transitionend", function handler() {
+				navigation.open = false;
+				menu.removeEventListener("transitionend",handler);
+			});
+		}
+		
+		summary.addEventListener("click", function(event) {
+			event.preventDefault();
+			if (navigation.open) {
+				closeMenu();
+			} else {
+				openMenu();
+			}
+		});
+		
+		if (navigation.open) {
+			navigation.classList.add("open");
+			menu.style.height = menu.scrollHeight + "px";
+			menu.addEventListener("transitionend", function handler() {
+				menu.style.height = "auto";
+				menu.removeEventListener("transitionend", handler);
+			});
+		}
+
+		const links = navigation.querySelectorAll(".nav-links a");
+		links.forEach(function(link) {
+			link.addEventListener("click", function() {
+				if (navigation.open) {
+					closeMenu();
+				}
+			});
+		});
+
+	</script>
+
+	</script>
+</body>
+
+</html>
